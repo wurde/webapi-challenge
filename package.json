@@ -16,7 +16,7 @@
     "unit",
     "challenge"
   ],
-  "author": "Lambda School",
+  "author": ["Lambda School", "Andy Bettisworth"],
   "bugs": {
     "url": "https://github.com/LambdaSchool/Sprint-Challenge-Node-Express/issues"
   },
