@@ -30,7 +30,25 @@ router.route('/')
     }
   })
   .post(async (req, res) => {
-    res.sendStatus(200)
+    try {
+      if (!req.body.name || !req.body.description) {
+        return res.status(400).json({ error: { message: 'Please provide name and description for the project.' }})
+      }
+
+      let project = await Project.create({
+        name: req.body.name,
+        description: req.body.description
+      })
+
+      if (project) {
+        res.status(201).json(project)
+      } else {
+        res.status(500).json({ error: { message: 'Unknown error during project creation.' }})
+      }
+    } catch(err) {
+      console.error(err)
+      res.status(500).json({ error: { message: 'There was an error while saving the project to the database.' }})
+    }
   })
 
 // GET,PUT,DELETE /projects/:id

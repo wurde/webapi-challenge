@@ -25,10 +25,12 @@ class Project {
     return project
   }
 
-  static insert(project) {
-    return db('projects')
-      .insert(project)
-      .then(([id]) => Project.find(id))
+  static async create(project) {
+    let id = await db('projects').insert(project)
+
+    let new_project = await db('projects').where('id', id[0]).limit(1)
+
+    return new_project[0]
   }
 
   static update(id, changes) {
