@@ -24,15 +24,25 @@ In this challenge, create a web API around the following resources: `Projects` a
 
 Demonstrate your understanding of this Sprint's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
-- [ ] Mention two parts of Express that you learned about this week.
+- [x] Mention two parts of Express that you learned about this week.
 
-- [ ] Describe Middleware?
+One thing we learned was Express has a built-in method for each HTTP method `GET`, `POST`, `PUT`, and `DELETE`. We also learned that each Express endpoint will have access to the request and response as objects passed in as arguments (by convention named `req` and `res`). Another thing we learned was the importance of not advertising what server you're using to the public, so configuring `app.disable('x-powered-by')` is smart.
 
-- [ ] Describe a Resource?
+- [x] Describe Middleware?
 
-- [ ] What can the API return to help clients know if a request was successful?
+Middleware can best be described as a queue of functions. Middleware for a web server is a queue of functions that get passed HTTP requests. Almost everything in an Express server is middleware. It has many use-cases, but two are for logging requests and handling authentication.
 
-- [ ] How can we partition our application into sub-applications?
+- [x] Describe a Resource?
+
+A Resource is something we can perform some or all of the CRUD operations on. In context of a web resource it can be identified via a URI.
+
+- [x] What can the API return to help clients know if a request was successful?
+
+Successful HTTP requests should return a status code starting with a 2xx with the most common being 200. Status codes signal to the client what happened on the backend. 200s are for success, 300s are for redirects, 400s for client errors, and 500s for server error.
+
+- [x] How can we partition our application into sub-applications?
+
+With Node we can use node modules either defined locally or deployed as a package on a registry like npm. With Express we can uses sub Routers.
 
 ## Project Setup
 
