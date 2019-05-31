@@ -1,9 +1,14 @@
 {
   "name": "webapi-challenge",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Web API Challenge",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "start": "node index.js",
+    "start:dev": "nodemon index.js",
+    "test": "ava --verbose",
+    "test:watch": "ava --verbose --watch"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/LambdaSchool/Sprint-Challenge-Node-Express.git"
@@ -13,17 +18,21 @@
     "unit",
     "challenge"
   ],
-  "author": "Lambda School",
+  "author": ["Lambda School", "Andy Bettisworth"],
   "bugs": {
     "url": "https://github.com/LambdaSchool/Sprint-Challenge-Node-Express/issues"
   },
   "homepage": "https://github.com/LambdaSchool/Sprint-Challenge-Node-Express#readme",
   "dependencies": {
+    "express": "^4.17.1",
     "helmet": "^3.18.0",
     "knex": "^0.17.1",
     "sqlite3": "^4.0.8"
   },
   "devDependencies": {
-    "knex-cleaner": "^1.1.4"
+    "ava": "^1.4.1",
+    "axios": "^0.19.0",
+    "knex-cleaner": "^1.1.4",
+    "nodemon": "^1.19.1"
   }
 }
