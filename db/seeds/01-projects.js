@@ -1,3 +1,9 @@
+'use strict'
+
+/**
+ * Export seed
+ */
+
 exports.seed = function(knex, Promise) {
   return knex('projects').insert([
     {
@@ -5,5 +11,5 @@ exports.seed = function(knex, Promise) {
       description:
         'Build and Awesome API Using Node.js and Express to Manage Projects and Actions GTD Style!',
     },
-  ]);
-};
+  ])
+}

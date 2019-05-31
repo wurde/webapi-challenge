@@ -1,6 +1,8 @@
+'use strict'
+
 exports.up = function(knex) {
   return knex.schema.createTable('actions', function(actions) {
-    actions.increments();
+    actions.increments()
 
     actions
       .integer('project_id')
@@ -9,14 +11,14 @@ exports.up = function(knex) {
       .references('id')
       .inTable('projects')
       .onDelete('CASCADE')
-      .onUpdate('CASCADE');
+      .onUpdate('CASCADE')
 
-    actions.string('description', 128).notNullable();
-    actions.text('notes').notNullable();
-    actions.boolean('completed').defaultTo(false);
-  });
-};
+    actions.string('description', 128).notNullable()
+    actions.text('notes').notNullable()
+    actions.boolean('completed').defaultTo(false)
+  })
+}
 
 exports.down = function(knex) {
-  return knex.schema.dropTableIfExists('actions');
-};
+  return knex.schema.dropTableIfExists('actions')
+}

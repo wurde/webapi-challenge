@@ -1,3 +1,9 @@
+'use strict'
+
+/**
+ * Export seed
+ */
+
 exports.seed = function(knex) {
   return knex('actions').insert([
     {
@@ -16,5 +22,5 @@ exports.seed = function(knex) {
       description: 'Design and Build API Endpoints',
       notes: 'This is where the magic happens!',
     },
-  ]);
-};
+  ])
+}
