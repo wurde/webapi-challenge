@@ -4,7 +4,7 @@
  * Dependencies
  */
 
-const db = require('../dbConfig.js')
+const db = require('../client.js')
 const mappers = {}
 
 /**
