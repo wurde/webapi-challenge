@@ -99,6 +99,8 @@ router.route('/:id')
     }
   })
 
+router.use('/:project_id', require('./actions_router'))
+
 /**
  * Export router
  */
