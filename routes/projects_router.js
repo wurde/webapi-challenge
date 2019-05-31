@@ -54,7 +54,18 @@ router.route('/')
 // GET,PUT,DELETE /projects/:id
 router.route('/:id')
   .get(async (req, res) => {
-    res.sendStatus(200)
+    try {
+      let project = await Project.find(req.params.id)
+
+      if (project) {
+        res.status(200).json(project)
+      } else {
+        res.status(404).json({ error: { message: 'Unable to find project.' }})
+      }
+    } catch (err) {
+      console.error(err)
+      res.status(500).json({ error: { message: 'Server error during project fetch.' }})
+    }
   })
   .put(async (req, res) => {
     res.sendStatus(200)
