@@ -93,12 +93,12 @@ router.route('/:id')
       let action = await Action.find(req.params.id)
 
       if (action) {
-        let action = await Action.update(req.params.id, {
+        let updated_action = await Action.update(req.params.id, {
           description: (req.body.description || action.description),
           notes: (req.body.notes || action.notes)
         })
 
-        res.status(200).json(action)
+        res.status(200).json(updated_action)
       } else {
         res.status(404).json({ error: { message: 'Action not found.' }})
       }
@@ -107,7 +107,17 @@ router.route('/:id')
     }
   })
   .delete(async (req, res) => {
-    res.sendStatus(200)
+    try {
+      let count = await Action.remove(req.params.id)
+
+      if (count > 0) {
+        res.sendStatus(200)
+      } else {
+        res.status(404).json({ error: { message: 'Action not found.' }})
+      }
+    } catch (err) {
+      res.status(500).json({ error: { message: 'Server error.' }})
+    }
   })
 
 /**

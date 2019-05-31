@@ -15,9 +15,9 @@ const router = express.Router({ mergeParams: true })
 
 /**
  * Routes
+ *   GET,POST /projects
  */
 
-// GET,POST /projects
 router.route('/')
   .get(async (req, res) => {
     try {
@@ -51,7 +51,11 @@ router.route('/')
     }
   })
 
-// GET,PUT,DELETE /projects/:id
+/**
+ * Routes
+ *   GET,PUT,DELETE /projects/:id
+ */
+
 router.route('/:id')
   .get(async (req, res) => {
     try {
@@ -72,12 +76,12 @@ router.route('/:id')
       let project = await Project.find(req.params.id)
 
       if (project) {
-        let project = await Project.update(req.params.id, {
+        let updated_project = await Project.update(req.params.id, {
           name: (req.body.name || project.name),
           description: (req.body.description || project.description)
         })
 
-        res.status(200).json(project)
+        res.status(200).json(updated_project)
       } else {
         res.status(404).json({ error: { message: 'Project not found.' }})
       }
