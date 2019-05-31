@@ -6,6 +6,7 @@
 
 const express = require('express')
 const check_project_exists = require('../middleware/check_project_exists')
+const check_action_exists = require('../middleware/check_action_exists')
 const Project = require('../models/Project')
 const Action = require('../models/Action')
 
@@ -17,15 +18,16 @@ const router = express.Router({ mergeParams: true })
 
 /**
  * Middleware
+ *   check_project_exists
  */
 
 router.use(check_project_exists)
 
 /**
  * Routes
+ *   GET,POST /projects/:project_id/actions
  */
 
-// GET,POST /projects/:project_id/actions
 router.route('/')
   .get(async (req, res) => {
     try {
@@ -59,7 +61,18 @@ router.route('/')
     }
   })
 
-// GET,PUT,DELETE /projects/:project_id/actions/:id
+/**
+ * Middleware
+ *   check_action_exists
+ */
+
+router.use(check_action_exists)
+
+/**
+ * Routes
+ *   GET,PUT,DELETE /projects/:project_id/actions/:id
+ */
+
 router.route('/:id')
   .get(async (req, res) => {
     try {
@@ -76,7 +89,22 @@ router.route('/:id')
     }
   })
   .put(async (req, res) => {
-    res.sendStatus(200)
+    try {
+      let action = await Action.find(req.params.id)
+
+      if (action) {
+        let action = await Action.update(req.params.id, {
+          description: (req.body.description || action.description),
+          notes: (req.body.notes || action.notes)
+        })
+
+        res.status(200).json(action)
+      } else {
+        res.status(404).json({ error: { message: 'Action not found.' }})
+      }
+    } catch (err) {
+      res.status(500).json({ error: { message: 'Server error.' }})
+    }
   })
   .delete(async (req, res) => {
     res.sendStatus(200)
