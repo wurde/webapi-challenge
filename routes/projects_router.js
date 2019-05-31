@@ -21,7 +21,7 @@ const router = express.Router({ mergeParams: true })
 router.route('/')
   .get(async (req, res) => {
     try {
-      let projects = await projectModel.all()
+      let projects = await projectModel.get()
 
       res.status(200).json(projects)
     } catch (err) {

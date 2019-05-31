@@ -25,7 +25,7 @@ function get(id) {
   if (id) {
     query.where('p.id', id).first()
 
-    const promises = [query, this.getProjectActions(id)] // [ projects, actions ]
+    const promises = [query, this.getProjectActions(id)]
 
     return Promise.all(promises).then(function(results) {
       let [project, actions] = results
@@ -33,7 +33,7 @@ function get(id) {
       if (project) {
         project.actions = actions
 
-        return mappers.projectToBody(project)
+        return projects
       } else {
         return null
       }
@@ -41,7 +41,7 @@ function get(id) {
   }
 
   return query.then(projects => {
-    return projects.map(project => mappers.projectToBody(project))
+    return projects
   })
 }
 
