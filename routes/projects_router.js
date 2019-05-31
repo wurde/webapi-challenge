@@ -5,7 +5,7 @@
  */
 
 const express = require('express')
-const projectModel = require('../db/helpers/projectModel')
+const Project = require('../models/Project')
 
 /**
  * Define router
@@ -21,7 +21,7 @@ const router = express.Router({ mergeParams: true })
 router.route('/')
   .get(async (req, res) => {
     try {
-      let projects = await projectModel.get()
+      let projects = await Project.all()
 
       res.status(200).json(projects)
     } catch (err) {
