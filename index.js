@@ -36,9 +36,8 @@ app.use(helmet())
  * Routes
  */
 
-app.use('/', (req, res) => {
-  res.sendStatus(200)
-})
+app.use('/', require('./routes/root_router'))
+app.use('/projects', require('./routes/projects_router'))
 
 /**
  * Start server
