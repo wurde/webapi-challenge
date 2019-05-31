@@ -86,7 +86,17 @@ router.route('/:id')
     }
   })
   .delete(async (req, res) => {
-    res.sendStatus(200)
+    try {
+      let count = await Project.remove(req.params.id)
+
+      if (count > 0) {
+        res.sendStatus(200)
+      } else {
+        res.status(404).json({ error: { message: 'Project not found.' }})
+      }
+    } catch (err) {
+      res.status(500).json({ error: { message: 'Server error.' }})
+    }
   })
 
 /**
