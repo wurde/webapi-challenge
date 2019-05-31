@@ -1,6 +1,6 @@
 {
   "name": "webapi-challenge",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Web API Challenge",
   "main": "index.js",
   "scripts": {
