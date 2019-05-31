@@ -26,7 +26,7 @@ router.route('/')
       res.status(200).json(projects)
     } catch (err) {
       console.error(err)
-      res.status(500).json({ error: { message: 'Server error during projects fetch.' }})
+      res.status(500).json({ error: { message: 'Server error.' }})
     }
   })
   .post(async (req, res) => {
@@ -99,7 +99,7 @@ router.route('/:id')
     }
   })
 
-router.use('/:project_id', require('./actions_router'))
+router.use('/:project_id/actions', require('./actions_router'))
 
 /**
  * Export router

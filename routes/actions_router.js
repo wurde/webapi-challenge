@@ -5,6 +5,7 @@
  */
 
 const express = require('express')
+const Action = require('../models/Action')
 
 /**
  * Define router
@@ -19,7 +20,14 @@ const router = express.Router({ mergeParams: true })
 // GET,POST /projects/:project_id/actions
 router.route('/')
   .get(async (req, res) => {
-    res.sendStatus(200)
+    try {
+      let actions = await Action.all(req.params.project_id)
+
+      res.status(200).json(actions)
+    } catch (err) {
+      console.error(err)
+      res.status(500).json({ error: { message: 'Server error.' }})
+    }
   })
   .post(async (req, res) => {
     res.sendStatus(200)

@@ -11,8 +11,8 @@ const db = require('../db/client.js')
  */
 
 class Action {
-  static async all() {
-    return await db('actions')
+  static async all(project_id) {
+    return await db('actions').where('project_id', project_id)
   }
 
   static async find(id) {
