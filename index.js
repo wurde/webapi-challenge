@@ -1,14 +1,57 @@
-/*
-play this: https://www.youtube.com/watch?v=d-diB65scQU
+'use strict'
 
-Sing along:
+/**
+ * Dependencies
+ */
 
-here's a little code I wrote, you might want to read it really slow, don't worry be happy
-in every line there may be trouble, but if you worry you make it double, don't worry, be happy
-ain't got no sense of what is REST? just concentrate on learning Express, don't worry, be happy
-your file is getting way too big, bring a Router and make it thin, don't worry, be crafty
-there is no data on that route, just write some code, you'll sort it out… don't worry, just API…
-I need this code, just don't know where, perhaps should make some middleware, don't worry, be happy
+const express = require('express')
+const helmet = require('helmet')
 
-Go code!
-*/
+/**
+ * Constants
+ */
+
+const port = 8080
+
+/**
+ * Define app
+ */
+
+const app = express()
+
+/**
+ * Configuration
+ */
+
+app.disable('x-powered-by')
+
+/**
+ * Middleware
+ */
+
+app.use(express.json())
+app.use(helmet())
+
+/**
+ * Routes
+ */
+
+app.use('/', (req, res) => {
+  res.sendStatus(200)
+})
+
+/**
+ * Start server
+ */
+
+if (module === require.main) {
+  app.listen(port, () => {
+    console.log(`Express server listening on ${port}.`)
+  })
+}
+
+/**
+ * Export app
+ */
+
+module.exports = app
