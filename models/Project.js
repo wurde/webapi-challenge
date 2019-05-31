@@ -33,11 +33,12 @@ class Project {
     return new_project[0]
   }
 
-  static update(id, changes) {
-    return db('projects')
-      .where('id', id)
-      .update(changes)
-      .then(count => (count > 0 ? Project.find(id) : null))
+  static async update(id, changes) {
+    await db('projects').where('id', id).update(changes)
+
+    let projects = await db('projects').where('id', id).limit(1)
+
+    return projects[0]
   }
 
   static async remove(id) {

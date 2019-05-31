@@ -43,11 +43,11 @@ router.route('/')
       if (project) {
         res.status(201).json(project)
       } else {
-        res.status(500).json({ error: { message: 'Unknown error during project creation.' }})
+        res.status(500).json({ error: { message: 'Server error.' }})
       }
     } catch(err) {
       console.error(err)
-      res.status(500).json({ error: { message: 'There was an error while saving the project to the database.' }})
+      res.status(500).json({ error: { message: 'Server error.' }})
     }
   })
 
@@ -60,15 +60,30 @@ router.route('/:id')
       if (project) {
         res.status(200).json(project)
       } else {
-        res.status(404).json({ error: { message: 'Unable to find project.' }})
+        res.status(404).json({ error: { message: 'Project not found.' }})
       }
     } catch (err) {
       console.error(err)
-      res.status(500).json({ error: { message: 'Server error during project fetch.' }})
+      res.status(500).json({ error: { message: 'Server error.' }})
     }
   })
   .put(async (req, res) => {
-    res.sendStatus(200)
+    try {
+      let project = await Project.find(req.params.id)
+
+      if (project) {
+        let project = await Project.update(req.params.id, {
+          name: (req.body.name || project.name),
+          description: (req.body.description || project.description)
+        })
+
+        res.status(200).json(project)
+      } else {
+        res.status(404).json({ error: { message: 'Project not found.' }})
+      }
+    } catch (err) {
+      res.status(500).json({ error: { message: 'Server error.' }})
+    }
   })
   .delete(async (req, res) => {
     res.sendStatus(200)
