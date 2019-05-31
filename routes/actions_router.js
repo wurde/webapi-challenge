@@ -5,6 +5,8 @@
  */
 
 const express = require('express')
+const check_project_exists = require('../middleware/check_project_exists')
+const Project = require('../models/Project')
 const Action = require('../models/Action')
 
 /**
@@ -12,6 +14,12 @@ const Action = require('../models/Action')
  */
 
 const router = express.Router({ mergeParams: true })
+
+/**
+ * Middleware
+ */
+
+router.use(check_project_exists)
 
 /**
  * Routes
@@ -30,13 +38,42 @@ router.route('/')
     }
   })
   .post(async (req, res) => {
-    res.sendStatus(200)
+    try {
+      if (!req.body.description || !req.body.notes) {
+        return res.status(400).json({ error: { message: 'Please provide description and notes for the action.' }})
+      }
+
+      let action = await Action.create({
+        description: req.body.description,
+        notes: req.body.notes
+      })
+
+      if (action) {
+        res.status(201).json(action)
+      } else {
+        res.status(500).json({ error: { message: 'Server error.' }})
+      }
+    } catch(err) {
+      console.error(err)
+      res.status(500).json({ error: { message: 'Server error.' }})
+    }
   })
 
 // GET,PUT,DELETE /projects/:project_id/actions/:id
 router.route('/:id')
   .get(async (req, res) => {
-    res.sendStatus(200)
+    try {
+      let action = await Action.find(req.params.id)
+
+      if (action) {
+        res.status(200).json(action)
+      } else {
+        res.status(404).json({ error: { message: 'Action not found.' }})
+      }
+    } catch (err) {
+      console.error(err)
+      res.status(500).json({ error: { message: 'Server error.' }})
+    }
   })
   .put(async (req, res) => {
     res.sendStatus(200)

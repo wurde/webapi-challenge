@@ -19,17 +19,20 @@ class Action {
     return await db('actions').where('id', id).first()
   }
 
-  static async insert(action) {
-    return db('actions')
-      .insert(action)
-      .then(([id]) => Action.find(id))
+  static async create(action) {
+    let id = await db('actions').insert(project)
+
+    let new_action = await db('actions').where('id', id[0]).limit(1)
+
+    return new_action[0]
   }
 
   static async update(id, changes) {
-    return db('actions')
-      .where('id', id)
-      .update(changes)
-      .then(count => (count > 0 ? Action.find(id) : null))
+    await db('actions').where('id', id).update(changes)
+
+    let actions = await db('actions').where('id', id).limit(1)
+
+    return actions[0]
   }
 
   static async remove(id) {
